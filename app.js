@@ -18,7 +18,7 @@ yargs.command({
       demandOption: true,
     },
   },
-  handler: (argv) => {
+  handler(argv) {
     log(notes.addNotes(argv.title, argv.body));
   },
 });
@@ -34,7 +34,7 @@ yargs.command({
       demandOption: "true",
     },
   },
-  handler: (argv) => {
+  handler(argv) {
     log(notes.removeNotes(argv.title));
   },
 });
@@ -43,8 +43,8 @@ yargs.command({
 yargs.command({
   command: "list",
   describe: "List your notes",
-  handler: () => {
-    log("List ot all notes");
+  handler() {
+    log(notes.listNotes());
   },
 });
 
@@ -52,10 +52,16 @@ yargs.command({
 yargs.command({
   command: "read",
   describe: "Read a note",
-  handler: () => {
-    log("Reading note");
+  builder: {
+    title: {
+      describe: "Read a note",
+      type: "string",
+      demandOption: "true",
+    },
+  },
+  handler(argv) {
+    log(notes.readNote(argv.title));
   },
 });
 
-//log(yargs.argv);
 yargs.parse();
